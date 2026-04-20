@@ -10,10 +10,13 @@ function InstagramIcon({ className }: { className?: string }) {
 
 // Replace these with real image URLs or import local images
 // Recommended: square images, min 600x600px
-const placeholders = Array.from({ length: 6 }, (_, index) => ({
+const photos = Array.from({ length: 6 }, (_, index) => ({
   id: index + 1,
+  src: `/gallery/photo-${index + 1}.jpg`,
   alt: `Corte de pelo ejemplo ${index + 1}`,
 }))
+
+console.log(photos)
 
 export default function Gallery() {
   return (
@@ -36,21 +39,25 @@ export default function Gallery() {
 
         {/* Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
-          {placeholders.map(({ id, alt }) => (
+          {photos.map(({ id, src, alt }) => (
             <div
               key={id}
               className="group relative aspect-square bg-[#2A2A2A] border border-[#C9A84C]/10 rounded-lg overflow-hidden hover:border-[#C9A84C]/40 transition-all duration-300"
             >
               {/* Placeholder content — replace with <img> once photos are ready */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-[#f0ece4]/20">
+              {/* <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-[#f0ece4]/20">
                 <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="3" y="3" width="18" height="18" rx="2"/>
                   <circle cx="8.5" cy="8.5" r="1.5"/>
                   <polyline points="21 15 16 10 5 21"/>
                 </svg>
                 <span className="text-xs">Foto {id}</span>
-              </div>
-
+              </div> */}
+              <img 
+                src={src}
+                alt={alt}
+                className="w-full h-full object-cover"
+              />
               {/* Hover overlay */}
               <div className="absolute inset-0 bg-[#C9A84C]/0 group-hover:bg-[#C9A84C]/10 transition-colors duration-300" />
               <span className="sr-only">{alt}</span>

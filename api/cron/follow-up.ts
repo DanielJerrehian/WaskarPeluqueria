@@ -1,9 +1,10 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { Resend } from 'resend'
+import getBaseUrl from '../utils/getBaseUrl';
 
 // Runs twice daily (vercel.json):
-//   ?shift=afternoon — 14:00 UTC (16:00 Barcelona) → emails appointments from 00:00–15:59
-//   ?shift=evening   — 20:00 UTC (22:00 Barcelona) → emails appointments from 16:00–23:59
+//   ?shift=day — 14:00 UTC (16:00 Barcelona) → emails appointments from 00:00–15:59
+//   ?shift=night 20:00 UTC (22:00 Barcelona) → emails appointments from 16:00–23:59
 //
 // Required env vars:
 //   SQUARE_ACCESS_TOKEN  — Square Developer Dashboard → Credentials → Production
@@ -14,6 +15,7 @@ import { Resend } from 'resend'
 //   CRON_SECRET          — random secret to protect this endpoint
 
 const resend = new Resend(process.env.RESEND_API_KEY!)
+const baseUrl = getBaseUrl();
 
 interface SquareAppointment {
   id: string
@@ -139,7 +141,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 }
 
 function buildFollowUpEmail(firstName: string, reviewUrl: string, email: string): string {
-  const unsubscribeUrl = `https://waskarpeluqueria.com/api/unsubscribe?email=${encodeURIComponent(email)}`
+  const unsubscribeUrl = `${baseUrl}/api/unsubscribe?email=${encodeURIComponent(email)}`
 
     return `
 <!DOCTYPE html>

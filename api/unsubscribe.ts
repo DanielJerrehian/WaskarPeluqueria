@@ -1,7 +1,9 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { Resend } from 'resend'
+import getBaseUrl from './utils/getBaseUrl'
 
 const resend = new Resend(process.env.RESEND_API_KEY!)
+const baseUrl = getBaseUrl();
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const email = req.query.email as string
@@ -46,11 +48,11 @@ function buildPage(type: 'success' | 'error', detail: string): string {
     ${isSuccess ? `
       <h1>Cancelado ✓</h1>
       <p>${detail} ha sido eliminado de nuestra lista.<br/>Ya no recibirás más emails de nuestra parte.</p>
-      <a href="https://waskarpeluqueria.com">Volver al inicio</a>
+      <a href=${baseUrl}>Volver al inicio</a>
     ` : `
       <h1>Error</h1>
       <p>${detail}</p>
-      <a href="https://waskarpeluqueria.com">Volver al inicio</a>
+      <a href=${baseUrl}>Volver al inicio</a>
     `}
   </div>
 </body>
