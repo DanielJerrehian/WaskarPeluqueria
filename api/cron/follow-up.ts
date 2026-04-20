@@ -180,8 +180,8 @@ function buildFollowUpEmail(firstName: string, reviewUrl: string, email: string)
                 <tr>
                   <td style="border-top:1px solid #C9A84C33;padding:24px 0;text-align:center;">
                     <p style="margin:0 0 16px;color:#f0ece4cc;font-size:14px;line-height:1.6;">
-                      ¿Te ha gustado el servicio? Tu opinión nos ayuda a crecer.<br/>
-                      Déjanos una reseña en Google — solo te lleva un minuto. 🙏
+                      ¿Te gustó el servicio? Tu opinión nos ayuda a crecer<br/>
+                      Déjanos una reseña en Google, solo tarda un minuto 🙏
                     </p>
                     <a href="${reviewUrl}"
                        style="display:inline-block;padding:14px 28px;background:#C9A84C;color:#1A1A1A;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;border-radius:4px;font-family:Arial,sans-serif;">
