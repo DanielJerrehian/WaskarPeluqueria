@@ -93,10 +93,15 @@ export default function About() {
               <p className="font-['Playfair_Display'] text-[#C9A84C] text-xl font-semibold mb-1">
                 República Dominicana
               </p>
-              <p className="text-[#f0ece4]/40 text-sm tracking-widest uppercase">→ El Born, Barcelona</p>
+              <a
+                href="https://maps.app.goo.gl/Uj5hxYp8RxgBhmCo9"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#f0ece4]/40 text-sm tracking-widest uppercase hover:text-[#C9A84C] transition-colors"
+              >→ El Born, Barcelona</a>
               <div className="mt-6 pt-6 border-t border-[#C9A84C]/20 grid grid-cols-2 gap-4 text-center">
                 <div>
-                  <p className="font-['Playfair_Display'] text-3xl font-bold text-[#C9A84C]">2</p>
+                  <p className="font-['Playfair_Display'] text-3xl font-bold text-[#C9A84C]">3</p>
                   <p className="text-[#f0ece4]/40 text-xs uppercase tracking-wide mt-1">Barbers expertos</p>
                 </div>
                 <div>

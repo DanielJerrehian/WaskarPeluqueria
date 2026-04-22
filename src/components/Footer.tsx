@@ -26,9 +26,14 @@ export default function Footer() {
           </div>
 
           {/* Middle info */}
-          <p className="text-[#f0ece4]/40 text-sm text-center">
-            El Born, Barcelona &nbsp;·&nbsp; Abrimos todos los días
-          </p>
+          <a
+            href="https://maps.app.goo.gl/Uj5hxYp8RxgBhmCo9"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#f0ece4]/40 text-sm text-center hover:text-[#C9A84C] transition-colors"
+          >
+            El Born, Barcelona &nbsp;·&nbsp; Abierto todos los días menos el lunes
+          </a>
 
           {/* Links */}
           <div className="flex items-center gap-5">

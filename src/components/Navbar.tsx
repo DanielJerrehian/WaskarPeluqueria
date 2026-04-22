@@ -8,7 +8,7 @@ export default function Navbar() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-[#1A1A1A]/95 backdrop-blur border-b border-[#C9A84C]/20">
-      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 group" onClick={() => setOpen(false)}>
           <Scissors className="w-5 h-5 text-[#C9A84C] group-hover:rotate-12 transition-transform duration-300" />
@@ -21,7 +21,7 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-8">
           {[
             { href: '/#services', label: 'Servicios' },
-            { href: '/#barbers', label: 'Barbers' },
+            { href: '/#barbers', label: 'Barberos' },
             { href: '/#gallery', label: 'Galería' },
             { href: '/#location', label: 'Ubicación' },
           ].map(({ href, label }) => (
@@ -40,11 +40,18 @@ export default function Navbar() {
             Nosotros
           </Link>
           <Link
+            to="/redes"
+            className="text-sm text-[#f0ece4]/70 hover:text-[#C9A84C] transition-colors duration-200 tracking-wide uppercase"
+          >
+            Redes Sociales
+          </Link>
+          <Link
             to="/booking"
             className="px-5 py-2 bg-[#C9A84C] text-[#1A1A1A] text-sm font-semibold rounded tracking-wide uppercase hover:bg-[#E2C97E] transition-colors duration-200"
           >
             Reservar
           </Link>
+
         </div>
 
         {/* Mobile toggle */}

@@ -14,6 +14,12 @@ const barbers = [
     bio: 'Especialista en degradados y diseños. Yayo aporta creatividad y precisión a cada corte, con un estilo propio que encanta a sus clientes.',
     initials: 'Y',
   },
+  {
+    name: 'José',
+    title: 'Barbero',
+    bio: 'Maestro del fade y los acabados perfectos. José trae energía y dedicación a cada cliente, con una técnica precisa forjada en años de experiencia.',
+    initials: 'J',
+  },
 ]
 
 export default function Barbers() {
@@ -33,11 +39,11 @@ export default function Barbers() {
         </div>
 
         {/* Barber cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {barbers.map(({ name, title, bio, initials }) => (
             <div
               key={name}
-              className="group bg-[#1A1A1A] border border-[#C9A84C]/20 rounded-lg p-8 text-center hover:border-[#C9A84C]/50 transition-all duration-300"
+              className="group bg-[#1A1A1A] border border-[#C9A84C]/20 rounded-lg p-8 text-center hover:border-[#C9A84C]/50 transition-all duration-300 flex flex-col"
             >
               {/* Avatar */}
               <div className="relative mx-auto mb-6 w-24 h-24">
@@ -58,7 +64,7 @@ export default function Barbers() {
               <p className="text-[#C9A84C] text-xs tracking-widest uppercase mb-4">
                 {title}
               </p>
-              <p className="text-[#f0ece4]/50 text-sm leading-relaxed mb-6">
+              <p className="text-[#f0ece4]/50 text-sm leading-relaxed mb-6 flex-1">
                 {bio}
               </p>
 

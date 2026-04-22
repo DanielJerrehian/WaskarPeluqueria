@@ -3,7 +3,7 @@ import { MapPin, Clock, Phone } from 'lucide-react'
 const WHATSAPP_URL = 'https://wa.me/34600754506?text=Hola%2C%20me%20gustar%C3%ADa%20reservar%20una%20cita.'
 
 const hours = [
-  { day: 'Lunes – Viernes', time: '12:00 – 21:00' },
+  { day: 'Martes - Viernes', time: '12:00 – 21:00' },
   { day: 'Sábado', time: '11:00 – 21:00' },
   { day: 'Domingo', time: '11:00 – 21:00' },
 ]
@@ -35,10 +35,15 @@ export default function Location() {
                 <h4 className="font-['Playfair_Display'] text-lg font-semibold text-[#f0ece4] mb-1">
                   Dirección
                 </h4>
-                <p className="text-[#f0ece4]/60 text-sm leading-relaxed">
+                <a
+                  href="https://maps.app.goo.gl/Uj5hxYp8RxgBhmCo9"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#f0ece4]/60 text-sm leading-relaxed hover:text-[#C9A84C] transition-colors"
+                >
                   Carrer de les Basses de Sant Pere, 1, Local 1<br />
                   Ciutat Vella, 08003 Barcelona
-                </p>
+                </a>
               </div>
             </div>
 

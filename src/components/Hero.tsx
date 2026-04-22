@@ -2,8 +2,6 @@ import { Link } from 'react-router-dom'
 import { ChevronDown } from 'lucide-react'
 
 export default function Hero() {
-  console.log(2+2)
-
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -60,7 +58,12 @@ export default function Hero() {
         {/* Ornament line */}
         <div className="flex items-center justify-center gap-4 mb-8">
           <div className="h-px w-16 bg-[#C9A84C]" />
-          <span className="text-[#C9A84C] text-xs tracking-[0.4em] uppercase">El Born · Barcelona</span>
+          <a
+            href="https://maps.app.goo.gl/Uj5hxYp8RxgBhmCo9"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#C9A84C] text-xs tracking-[0.4em] uppercase hover:text-[#E2C97E] transition-colors"
+          >El Born · Barcelona</a>
           <div className="h-px w-16 bg-[#C9A84C]" />
         </div>
 

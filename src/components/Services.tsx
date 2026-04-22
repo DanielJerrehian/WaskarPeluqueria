@@ -1,4 +1,4 @@
-import { Scissors, Wind, Sparkles } from 'lucide-react'
+import { Scissors, Wind, Sparkles, Pen } from 'lucide-react'
 
 const services = [
   {
@@ -22,6 +22,13 @@ const services = [
     price: '10€',
     description: 'Tratamientos adicionales: cejas, nevado, diseño de líneas.',
   },
+  {
+    icon: Pen,
+    name: 'Diseños',
+    nameEn: 'Designs',
+    price: 'Consultar',
+    description: 'Diseños artísticos a navaja o máquina integrados en el corte. Desde líneas y patrones hasta figuras personalizadas.',
+  },
 ]
 
 export default function Services() {
@@ -41,7 +48,7 @@ export default function Services() {
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
           {services.map(({ icon: Icon, name, nameEn, price, description }) => (
             <div
               key={nameEn}
@@ -54,9 +61,15 @@ export default function Services() {
                 <div className="p-3 bg-[#C9A84C]/10 rounded-lg">
                   <Icon className="w-6 h-6 text-[#C9A84C]" />
                 </div>
-                <span className="font-['Playfair_Display'] text-3xl font-bold text-[#C9A84C]">
-                  {price}
-                </span>
+                {price === 'Consultar' ? (
+                  <span className="text-xs font-semibold tracking-widest uppercase text-[#C9A84C] border border-[#C9A84C]/40 rounded px-2 py-1 self-start mt-1">
+                    Consultar
+                  </span>
+                ) : (
+                  <span className="font-['Playfair_Display'] text-3xl font-bold text-[#C9A84C]">
+                    {price}
+                  </span>
+                )}
               </div>
 
               <h3 className="font-['Playfair_Display'] text-xl font-semibold text-[#f0ece4] mb-2">

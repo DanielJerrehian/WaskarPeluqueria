@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { CalendarDays, Scissors, Wind, Sparkles } from 'lucide-react'
+import { CalendarDays, Scissors, Wind, Sparkles, Pen } from 'lucide-react'
 
 const SQUARE_URL = 'https://app.squareup.com/appointments/book/rtuatt9b3zl5jw/LD7M6B9BDJXRQ/start'
 
@@ -8,9 +8,10 @@ const services = [
   { icon: Scissors, name: 'Corte de Cabello', price: '20€' },
   { icon: Wind, name: 'Barba', price: '10€' },
   { icon: Sparkles, name: 'Mejoras', price: '10€' },
+  { icon: Pen, name: 'Diseños', price: 'Consultar' },
 ]
 
-const barbers = ['Waskar', 'Yayo']
+const barbers = ['Waskar', 'Yayo', 'José']
 
 export default function Booking() {
   return (
