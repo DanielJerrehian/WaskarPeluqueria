@@ -15,9 +15,9 @@ const barbers = [
     initials: 'Y',
   },
   {
-    name: 'José',
+    name: 'Robinson',
     title: 'Barbero',
-    bio: 'Maestro del fade y los acabados perfectos. José trae energía y dedicación a cada cliente, con una técnica precisa forjada en años de experiencia.',
+    bio: 'Maestro del fade y los acabados perfectos. Robinson trae energía y dedicación a cada cliente, con una técnica precisa forjada en años de experiencia.',
     initials: 'J',
   },
 ]

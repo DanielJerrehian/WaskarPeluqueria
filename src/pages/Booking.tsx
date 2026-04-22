@@ -11,7 +11,7 @@ const services = [
   { icon: Pen, name: 'Diseños', price: 'Consultar' },
 ]
 
-const barbers = ['Waskar', 'Yayo', 'José']
+const barbers = ['Waskar', 'Yayo', 'Robinson']
 
 export default function Booking() {
   return (
