@@ -17,13 +17,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     // Add to Resend Audience — handles duplicates and unsubscribes automatically
-    await resend.contacts.create({
+    const created = await resend.contacts.create({
       email: normalizedEmail,
       audienceId: process.env.RESEND_AUDIENCE_ID!,
       unsubscribed: false,
     })
 
-    return res.status(200).json({ ok: true })
+    return res.status(200).json({
+      ok: true,
+      created
+    })
   } catch (err: unknown) {
     // Resend returns a 409 if the contact already exists — treat as success
     if (err instanceof Error && err.message?.includes('already exists')) {
