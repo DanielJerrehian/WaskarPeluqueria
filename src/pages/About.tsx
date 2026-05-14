@@ -105,7 +105,7 @@ export default function About() {
                   <p className="text-[#f0ece4]/40 text-xs uppercase tracking-wide mt-1">Barbers expertos</p>
                 </div>
                 <div>
-                  <p className="font-['Playfair_Display'] text-3xl font-bold text-[#C9A84C]">10+</p>
+                  <p className="font-['Playfair_Display'] text-3xl font-bold text-[#C9A84C]">15+</p>
                   <p className="text-[#f0ece4]/40 text-xs uppercase tracking-wide mt-1">Años de experiencia</p>
                 </div>
               </div>
