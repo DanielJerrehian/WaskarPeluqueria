@@ -3,8 +3,8 @@ import { Resend } from 'resend'
 import getBaseUrl from '../utils/getBaseUrl';
 
 // Runs twice daily (vercel.json):
-//   ?shift=day — 14:00 UTC (16:00 Barcelona) → emails appointments from 00:00–15:59
-//   ?shift=night 20:00 UTC (22:00 Barcelona) → emails appointments from 16:00–23:59
+//   ?shift=day — 14:00 UTC (16:00 Barcelona) → emails appointments from 00:00-15:59
+//   ?shift=night 20:00 UTC (22:00 Barcelona) → emails appointments from 16:00-23:59
 //
 // Required env vars:
 //   SQUARE_ACCESS_TOKEN  — Square Developer Dashboard → Credentials → Production
@@ -41,8 +41,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const startAt = new Date(today)
   const endAt = new Date(today)
 
-  // afternoon run at 16:45 Barcelona → catches appointments that started 00:00–14:00
-  // evening run at 21:45 Barcelona → catches appointments that started 14:01–23:59
+  // afternoon run at 16:45 Barcelona → catches appointments that started 00:00-14:00
+  // evening run at 21:45 Barcelona → catches appointments that started 14:01-23:59
   if (shift === 'day') {
     startAt.setHours(0, 0, 0, 0)
     endAt.setHours(14, 0, 0, 0)

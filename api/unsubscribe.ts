@@ -34,7 +34,7 @@ function buildPage(type: 'success' | 'error', detail: string): string {
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>${isSuccess ? 'Cancelado' : 'Error'} – Waskar Peluquería</title>
+  <title>${isSuccess ? 'Cancelado' : 'Error'} - Waskar Peluquería</title>
   <style>
     body { margin:0; background:#1A1A1A; font-family:Arial,sans-serif; display:flex; align-items:center; justify-content:center; min-height:100vh; }
     .card { background:#2A2A2A; border:1px solid #C9A84C33; border-radius:8px; padding:48px 40px; text-align:center; max-width:420px; width:90%; }

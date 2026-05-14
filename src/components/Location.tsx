@@ -3,9 +3,9 @@ import { MapPin, Clock, Phone } from 'lucide-react'
 const WHATSAPP_URL = 'https://wa.me/34600754506?text=Hola%2C%20me%20gustar%C3%ADa%20reservar%20una%20cita.'
 
 const hours = [
-  { day: 'Martes - Viernes', time: '12:00 – 21:00' },
-  { day: 'Sábado', time: '11:00 – 21:00' },
-  { day: 'Domingo', time: '11:00 – 21:00' },
+  { day: 'Martes - Viernes', time: '12:00 - 21:00' },
+  { day: 'Sábado', time: '11:00 - 21:00' },
+  { day: 'Domingo', time: '11:00 - 21:00' },
 ]
 
 export default function Location() {
