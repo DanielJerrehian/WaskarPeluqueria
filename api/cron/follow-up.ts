@@ -1,6 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { Resend } from 'resend'
-import getBaseUrl from '../utils/getBaseUrl';
+
+import getBaseUrl from '../utils/getBaseUrl.js';
 
 // Runs twice daily (vercel.json):
 //   ?shift=day — 14:00 UTC (16:00 Barcelona) → emails appointments from 00:00-15:59

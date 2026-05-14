@@ -1,6 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { Resend } from 'resend'
-import getBaseUrl from './utils/getBaseUrl'
+
+import getBaseUrl from './utils/getBaseUrl.js'
 
 const resend = new Resend(process.env.RESEND_API_KEY!)
 const baseUrl = getBaseUrl();
