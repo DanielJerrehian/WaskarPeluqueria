@@ -38,7 +38,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const shift = req.query.shift === 'night' ? 'night' : 'day'
   const today = new Date()
-  today.setDate(today.getDate())
   const startAt = new Date(today)
   const endAt = new Date(today)
 
@@ -108,6 +107,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       } catch {
         // Not in audience yet — fine, still send
       }
+      const unsubscribeUrl = `${baseUrl}/api/unsubscribe?email=${encodeURIComponent(email)}`
 
       const firstName = customer.given_name ?? 'cliente'
       const reviewUrl = process.env.GOOGLE_REVIEW_URL ?? '#'
@@ -117,9 +117,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         from: process.env.RESEND_FROM_EMAIL!,
         to: email,
         subject: `¡Gracias por visitarnos, ${firstName}! ✂️`,
-        html: buildFollowUpEmail(firstName, reviewUrl, email),
+        html: buildFollowUpEmail(firstName, reviewUrl, unsubscribeUrl),
         headers: {
-          'List-Unsubscribe': `<mailto:unsubscribe@waskarpeluqueria.com?subject=unsubscribe>`,
+          'List-Unsubscribe': `<${unsubscribeUrl}>`,
           'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
         },
       })
@@ -141,10 +141,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 }
 
-function buildFollowUpEmail(firstName: string, reviewUrl: string, email: string): string {
-  const unsubscribeUrl = `${baseUrl}/api/unsubscribe?email=${encodeURIComponent(email)}`
+function buildFollowUpEmail(firstName: string, reviewUrl: string, unsubscribeUrl: string): string {
 
-    return `
+  return `
 <!DOCTYPE html>
 <html lang="es">
 <head>
