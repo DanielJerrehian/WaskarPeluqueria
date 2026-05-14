@@ -38,7 +38,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const shift = req.query.shift === 'night' ? 'night' : 'day'
   const today = new Date()
-  today.setDate(today.getDate() + 1)
+  today.setDate(today.getDate())
   const startAt = new Date(today)
   const endAt = new Date(today)
 
