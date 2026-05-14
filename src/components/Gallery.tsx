@@ -8,8 +8,6 @@ function InstagramIcon({ className }: { className?: string }) {
   )
 }
 
-// Replace these with real image URLs or import local images
-// Recommended: square images, min 600x600px
 const photos = Array.from({ length: 6 }, (_, index) => ({
   id: index + 1,
   src: `/gallery/photo-${index + 1}.jpg`,
