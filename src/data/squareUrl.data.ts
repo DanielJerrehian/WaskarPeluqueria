@@ -1,0 +1,1 @@
+export const squareUrl = 'https://app.squareup.com/appointments/book/6nla9d0gojgj9y/LBEKDNZ5SVZG6/start'

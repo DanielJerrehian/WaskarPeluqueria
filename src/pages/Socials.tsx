@@ -30,7 +30,6 @@ const socials = [
   {
     name: 'Instagram',
     handle: '@waskarpeluqueria',
-    description: 'Fotos de los mejores cortes, diseños y el día a día en la barbería.',
     link: 'https://www.instagram.com/waskarpeluqueria/',
     Icon: InstagramIcon,
     color: 'from-purple-500 via-pink-500 to-orange-400',
@@ -38,7 +37,6 @@ const socials = [
   {
     name: 'TikTok',
     handle: '@waskarpeluqueria',
-    description: 'Vídeos de transformaciones, técnicas y el ambiente de la barbería.',
     link: 'https://www.tiktok.com/@waskarpeluqueria',
     Icon: TikTokIcon,
     color: 'from-cyan-400 to-pink-500',
@@ -46,7 +44,6 @@ const socials = [
   {
     name: 'YouTube',
     handle: 'Waskar Peluquería',
-    description: 'Tutoriales, vlogs y contenido exclusivo del equipo.',
     link: 'https://www.youtube.com/channel/UC1CdIzuKeoJeIHdRAsrZ8cQ',
     Icon: YouTubeIcon,
     color: 'from-red-500 to-red-700',
@@ -74,7 +71,7 @@ export default function Socials() {
 
         {/* Social cards */}
         <div className="flex flex-col gap-6 mb-12">
-          {socials.map(({ name, handle, description, link, Icon, color }) => (
+          {socials.map(({ name, handle, link, Icon, color }) => (
             <a
               key={name}
               href={link}
@@ -95,7 +92,6 @@ export default function Socials() {
                   </h3>
                   <span className="text-[#C9A84C] text-xs tracking-wide">{handle}</span>
                 </div>
-                <p className="text-[#f0ece4]/50 text-sm">{description}</p>
               </div>
 
               {/* Arrow */}

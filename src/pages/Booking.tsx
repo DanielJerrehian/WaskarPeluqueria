@@ -1,17 +1,9 @@
 import { Link } from 'react-router-dom'
-import { CalendarDays, Scissors, Wind, Sparkles, Pen } from 'lucide-react'
+import { CalendarDays } from 'lucide-react'
 
-const SQUARE_URL = 'https://app.squareup.com/appointments/book/rtuatt9b3zl5jw/LD7M6B9BDJXRQ/start'
-
-
-const services = [
-  { icon: Scissors, name: 'Corte de Cabello', price: '20€' },
-  { icon: Wind, name: 'Barba', price: '10€' },
-  { icon: Sparkles, name: 'Mejoras', price: '10€' },
-  { icon: Pen, name: 'Diseños', price: 'Consultar' },
-]
-
-const barbers = ['Waskar', 'Yayo', 'Robinson']
+import { services } from '../data/services.data'
+import { barbers } from '../data/barbers.data'
+import { squareUrl } from '../data/squareUrl.data'
 
 export default function Booking() {
   return (
@@ -33,12 +25,15 @@ export default function Booking() {
         </div>
 
         {/* Services summary */}
-        <div className="grid grid-cols-3 gap-3 mb-8">
-          {services.map(({ icon: Icon, name, price }) => (
-            <div key={name} className="bg-[#2A2A2A] border border-[#C9A84C]/20 rounded-lg p-4 text-center">
-              <Icon className="w-5 h-5 text-[#C9A84C] mx-auto mb-2" />
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+          {services.map(({ icon: Icon, name, price, priceLabel, badge }) => (
+            <div key={name} className="bg-[#2A2A2A] border border-[#C9A84C]/20 rounded-lg p-5 text-center">
+              <Icon className="w-6 h-6 text-[#C9A84C] mx-auto mb-2" />
               <p className="text-[#f0ece4]/70 text-xs mb-1">{name}</p>
-              <p className="text-[#C9A84C] font-semibold text-sm">{price}</p>
+              <p className="text-[#C9A84C] font-semibold text-sm">{price ?? priceLabel ?? 'Consultar'}</p>
+              {badge && (
+                <p className="text-[#C9A84C]/50 text-[10px] mt-0.5">{badge}</p>
+              )}
             </div>
           ))}
         </div>
@@ -57,11 +52,11 @@ export default function Booking() {
 
         {/* CTA */}
         <a
-          href={SQUARE_URL}
+          href={squareUrl}
           className="flex items-center justify-center gap-3 w-full py-5 bg-[#C9A84C] text-[#1A1A1A] font-semibold text-sm tracking-widest uppercase rounded hover:bg-[#E2C97E] transition-all duration-300 hover:shadow-[0_0_30px_rgba(201,168,76,0.4)] mb-4"
         >
           <CalendarDays className="w-5 h-5" />
-          Reservar Cita
+          Haz Clic para Reservar Cita
         </a>
 
         <div className="mt-10 text-center">

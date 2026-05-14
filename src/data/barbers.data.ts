@@ -1,0 +1,1 @@
+export const barbers = ['Waskar', 'Yayo', 'Robinson']
