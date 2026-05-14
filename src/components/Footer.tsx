@@ -48,7 +48,7 @@ export default function Footer() {
               +34 600 754 506
             </a>
             <a
-              href="https://www.instagram.com"
+              href="https://www.instagram.com/waskarpeluqueria/"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 text-[#f0ece4]/50 hover:text-[#C9A84C] transition-colors text-sm"

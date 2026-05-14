@@ -68,7 +68,7 @@ export default function Gallery() {
         {/* Instagram CTA */}
         <div className="text-center mt-10">
           <a
-            href="https://www.instagram.com"
+            href="https://www.instagram.com/waskarpeluqueria/"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2.5 px-6 py-3 border border-[#C9A84C]/40 text-[#C9A84C] text-sm font-semibold uppercase tracking-wide rounded hover:bg-[#C9A84C] hover:text-[#1A1A1A] transition-all duration-300"
