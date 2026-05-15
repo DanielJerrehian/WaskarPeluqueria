@@ -1,22 +1,10 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { Resend } from 'resend'
 
-import getBaseUrl from '../utils/getBaseUrl.js';
-
-// Runs twice daily (vercel.json):
-//   ?shift=day — 14:00 UTC (16:00 Barcelona) → emails appointments from 00:00-15:59
-//   ?shift=night 20:00 UTC (22:00 Barcelona) → emails appointments from 16:00-23:59
-//
-// Required env vars:
-//   SQUARE_ACCESS_TOKEN  — Square Developer Dashboard → Credentials → Production
-//   RESEND_API_KEY       — resend.com → API Keys
-//   RESEND_FROM_EMAIL    — e.g. "Waskar Peluquería <hola@waskarpeluqueria.com>"
-//   RESEND_AUDIENCE_ID   — Resend Dashboard → Audiences
-//   GOOGLE_REVIEW_URL    — Google Business Profile → Ask for reviews
-//   CRON_SECRET          — random secret to protect this endpoint
+import getBaseUrl from '../utils/getBaseUrl.js'
 
 const resend = new Resend(process.env.RESEND_API_KEY!)
-const baseUrl = getBaseUrl();
+const baseUrl = getBaseUrl()
 
 interface SquareAppointment {
   id: string
@@ -41,8 +29,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const startAt = new Date(today)
   const endAt = new Date(today)
 
-  // afternoon run at 16:45 Barcelona → catches appointments that started 00:00-14:00
-  // evening run at 21:45 Barcelona → catches appointments that started 14:01-23:59
   if (shift === 'day') {
     startAt.setHours(0, 0, 0, 0)
     endAt.setHours(14, 0, 0, 0)
@@ -52,7 +38,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    // 1. Fetch appointments from Square for this shift's time window
     const squareRes = await fetch(
       `https://connect.squareup.com/v2/bookings?start_at_min=${startAt.toISOString()}&start_at_max=${endAt.toISOString()}`,
       {
@@ -64,23 +49,47 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     )
 
-    if (!squareRes.ok) throw new Error(`Square API error: ${squareRes.status}`)
+    if (!squareRes.ok) {
+      throw new Error(`Square API error: ${squareRes.status}`)
+    }
 
-    const appointments: SquareAppointment[] = (await squareRes.json()).bookings ?? []
+    const squareData = await squareRes.json()
+    const appointments: SquareAppointment[] = squareData.bookings ?? []
+    const appointmentsFound = appointments.length
 
     let sent = 0
     let skipped = 0
 
+    const skipReasons: Record<string, number> = {
+      cancelledOrNoShow: 0,
+      missingCustomerId: 0,
+      customerFetchFailed: 0,
+      missingEmail: 0,
+      unsubscribed: 0,
+      resendSendFailed: 0,
+      contactCreateFailed: 0,
+    }
+
+    console.log('follow-up cron Square window:', {
+      shift,
+      startAt: startAt.toISOString(),
+      endAt: endAt.toISOString(),
+      appointmentsFound,
+    })
+
     for (const appt of appointments) {
-      // Skip no-shows and cancellations — barber marks these in the Square app
       if (appt.status === 'NO_SHOW' || appt.status?.startsWith('CANCELLED')) {
         skipped++
+        skipReasons.cancelledOrNoShow++
         continue
       }
 
-      if (!appt.customer_id) { skipped++; continue }
+      if (!appt.customer_id) {
+        skipped++
+        skipReasons.missingCustomerId++
+        continue
+      }
 
-      // 2. Fetch customer details from Square
       const custRes = await fetch(
         `https://connect.squareup.com/v2/customers/${appt.customer_id}`,
         {
@@ -90,30 +99,43 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           },
         }
       )
-      if (!custRes.ok) { skipped++; continue }
+
+      if (!custRes.ok) {
+        skipped++
+        skipReasons.customerFetchFailed++
+        continue
+      }
 
       const customer: SquareCustomer = (await custRes.json()).customer
-      if (!customer.email_address) { skipped++; continue }
+
+      if (!customer.email_address) {
+        skipped++
+        skipReasons.missingEmail++
+        continue
+      }
 
       const email = customer.email_address.toLowerCase().trim()
 
-      // 3. Check if unsubscribed in Resend
       try {
         const contact = await resend.contacts.get({
           email,
           audienceId: process.env.RESEND_AUDIENCE_ID!,
         })
-        if (contact.data?.unsubscribed) { skipped++; continue }
+
+        if (contact.data?.unsubscribed) {
+          skipped++
+          skipReasons.unsubscribed++
+          continue
+        }
       } catch {
         // Not in audience yet — fine, still send
       }
-      const unsubscribeUrl = `${baseUrl}/api/unsubscribe?email=${encodeURIComponent(email)}`
 
+      const unsubscribeUrl = `${baseUrl}/api/unsubscribe?email=${encodeURIComponent(email)}`
       const firstName = customer.given_name ?? 'cliente'
       const reviewUrl = process.env.GOOGLE_REVIEW_URL ?? '#'
 
-      // 4. Send thank-you + review email
-      await resend.emails.send({
+      const sendResult = await resend.emails.send({
         from: process.env.RESEND_FROM_EMAIL!,
         to: email,
         subject: `¡Gracias por visitarnos, ${firstName}! ✂️`,
@@ -124,17 +146,41 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         },
       })
 
-      // 5. Add to Resend audience so unsubscribe works
-      await resend.contacts.create({
+      if (sendResult.error) {
+        skipped++
+        skipReasons.resendSendFailed++
+        console.error('Resend send failed:', sendResult.error)
+        continue
+      }
+
+      const contactCreateResult = await resend.contacts.create({
         email,
         audienceId: process.env.RESEND_AUDIENCE_ID!,
         unsubscribed: false,
-      }).catch(() => { /* already exists — fine */ })
+      })
+
+      if (contactCreateResult.error) {
+        skipReasons.contactCreateFailed++
+        console.warn('Resend contact create failed:', contactCreateResult.error)
+      }
 
       sent++
     }
 
-    return res.status(200).json({ ok: true, shift, sent, skipped })
+    const result = {
+      ok: true,
+      shift,
+      startAt: startAt.toISOString(),
+      endAt: endAt.toISOString(),
+      appointmentsFound,
+      sent,
+      skipped,
+      skipReasons,
+    }
+
+    console.log('follow-up cron result:', result)
+
+    return res.status(200).json(result)
   } catch (err) {
     console.error('follow-up cron error:', err)
     return res.status(500).json({ error: 'Internal server error' })
@@ -142,7 +188,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 }
 
 function buildFollowUpEmail(firstName: string, reviewUrl: string, unsubscribeUrl: string): string {
-
   return `
 <!DOCTYPE html>
 <html lang="es">
@@ -157,7 +202,6 @@ function buildFollowUpEmail(firstName: string, reviewUrl: string, unsubscribeUrl
       <td align="center" style="padding:40px 20px;">
         <table width="560" cellpadding="0" cellspacing="0" style="background:#2A2A2A;border:1px solid #C9A84C33;border-radius:8px;overflow:hidden;max-width:100%;">
 
-          <!-- Header -->
           <tr>
             <td style="background:#C9A84C;padding:24px 32px;text-align:center;">
               <p style="margin:0;color:#1A1A1A;font-size:11px;letter-spacing:4px;text-transform:uppercase;font-family:Arial,sans-serif;">
@@ -166,7 +210,6 @@ function buildFollowUpEmail(firstName: string, reviewUrl: string, unsubscribeUrl
             </td>
           </tr>
 
-          <!-- Body -->
           <tr>
             <td style="padding:40px 32px;text-align:center;">
               <h1 style="margin:0 0 8px;color:#C9A84C;font-size:32px;font-weight:700;">
@@ -177,7 +220,6 @@ function buildFollowUpEmail(firstName: string, reviewUrl: string, unsubscribeUrl
                 Esperamos verte pronto.
               </p>
 
-              <!-- Review CTA -->
               <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                   <td style="border-top:1px solid #C9A84C33;padding:24px 0;text-align:center;">
@@ -199,7 +241,6 @@ function buildFollowUpEmail(firstName: string, reviewUrl: string, unsubscribeUrl
             </td>
           </tr>
 
-          <!-- Footer -->
           <tr>
             <td style="padding:16px 32px;border-top:1px solid #C9A84C22;text-align:center;">
               <p style="margin:0;color:#f0ece433;font-size:11px;font-family:Arial,sans-serif;line-height:1.8;">
