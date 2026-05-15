@@ -2,11 +2,11 @@
   "crons": [
     {
       "path": "/api/cron/follow-up?shift=day",
-      "schedule": "30 15 * * *"
+      "schedule": "00 15 * * *"
     },
     {
       "path": "/api/cron/follow-up?shift=night",
-      "schedule": "45 20 * * *"
+      "schedule": "45 19 * * *"
     }
   ],
   "rewrites": [
