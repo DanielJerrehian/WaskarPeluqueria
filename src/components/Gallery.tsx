@@ -14,8 +14,6 @@ const photos = Array.from({ length: 6 }, (_, index) => ({
   alt: `Corte de pelo ejemplo ${index + 1}`,
 }))
 
-console.log(photos)
-
 export default function Gallery() {
   return (
     <section id="gallery" className="py-24 bg-[#111]">

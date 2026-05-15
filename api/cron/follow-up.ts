@@ -31,9 +31,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   if (shift === 'day') {
     startAt.setHours(0, 0, 0, 0)
-    endAt.setHours(14, 0, 0, 0)
+    endAt.setHours(17, 0, 0, 0)
   } else {
-    startAt.setHours(14, 0, 1, 0)
+    startAt.setHours(17, 0, 1, 0)
     endAt.setHours(23, 59, 59, 999)
   }
 
@@ -224,8 +224,7 @@ function buildFollowUpEmail(firstName: string, reviewUrl: string, unsubscribeUrl
                 <tr>
                   <td style="border-top:1px solid #C9A84C33;padding:24px 0;text-align:center;">
                     <p style="margin:0 0 16px;color:#f0ece4cc;font-size:14px;line-height:1.6;">
-                      ¿Te gustó el servicio? Tu opinión nos ayuda a crecer<br/>
-                      Déjanos una reseña en Google, solo tarda un minuto 🙏
+                      ¿Te gustó el servicio? Si quieres compartir tu experiencia, déjanos un reseña en Google<br/>
                     </p>
                     <a href="${reviewUrl}"
                        style="display:inline-block;padding:14px 28px;background:#C9A84C;color:#1A1A1A;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;border-radius:4px;font-family:Arial,sans-serif;">
