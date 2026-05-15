@@ -40,12 +40,12 @@ export default function Booking() {
 
         {/* Barbers */}
         <div className="flex gap-3 mb-8">
-          {barbers.map((name) => (
-            <div key={name} className="flex-1 bg-[#2A2A2A] border border-[#C9A84C]/20 rounded-lg p-4 text-center">
+          {barbers.map((barber) => (
+            <div key={barber.name} className="flex-1 bg-[#2A2A2A] border border-[#C9A84C]/20 rounded-lg p-4 text-center">
               <div className="w-10 h-10 rounded-full bg-[#C9A84C]/10 border border-[#C9A84C]/30 flex items-center justify-center mx-auto mb-2">
-                <span className="font-['Playfair_Display'] text-[#C9A84C] font-bold">{name[0]}</span>
+                <span className="font-['Playfair_Display'] text-[#C9A84C] font-bold">{barber.initials}</span>
               </div>
-              <p className="text-[#f0ece4]/70 text-sm">{name}</p>
+              <p className="text-[#f0ece4]/70 text-sm">{barber.name}</p>
             </div>
           ))}
         </div>
