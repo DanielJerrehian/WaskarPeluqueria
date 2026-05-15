@@ -102,7 +102,7 @@ export default function About() {
               <div className="mt-6 pt-6 border-t border-[#C9A84C]/20 grid grid-cols-2 gap-4 text-center">
                 <div>
                   <p className="font-['Playfair_Display'] text-3xl font-bold text-[#C9A84C]">3</p>
-                  <p className="text-[#f0ece4]/40 text-xs uppercase tracking-wide mt-1">Barbers expertos</p>
+                  <p className="text-[#f0ece4]/40 text-xs uppercase tracking-wide mt-1">Barberos expertos</p>
                 </div>
                 <div>
                   <p className="font-['Playfair_Display'] text-3xl font-bold text-[#C9A84C]">15+</p>

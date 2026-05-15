@@ -18,7 +18,7 @@ const barbers = [
     name: 'Robinson',
     title: 'Barbero',
     bio: 'Maestro del fade y los acabados perfectos. Robinson trae energía y dedicación a cada cliente, con una técnica precisa forjada en años de experiencia.',
-    initials: 'J',
+    initials: 'R',
   },
 ]
 
@@ -34,7 +34,7 @@ export default function Barbers() {
             <div className="h-px w-12 bg-[#C9A84C]" />
           </div>
           <h2 className="font-['Playfair_Display'] text-4xl md:text-5xl font-bold text-[#f0ece4]">
-            Nuestros Barbers
+            Nuestros Barberos
           </h2>
         </div>
 
