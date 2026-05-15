@@ -5,7 +5,7 @@ const WHATSAPP_URL = 'https://wa.me/34600754506?text=Hola%2C%20me%20gustar%C3%AD
 const hours = [
   { day: 'Martes - Viernes', time: '12:00 - 21:00' },
   { day: 'Sábado', time: '11:00 - 21:00' },
-  { day: 'Domingo', time: '11:00 - 21:00' },
+  { day: 'Domingo', time: '12:00 - 19:00' },
 ]
 
 export default function Location() {
